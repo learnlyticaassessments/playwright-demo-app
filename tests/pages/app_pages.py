@@ -224,3 +224,4 @@ class DashboardPage(BasePage):
     def logout(self):
         """Logout from dashboard"""
         self.page.get_by_test_id(DashboardLocators.LOGOUT_BUTTON).click()
+
