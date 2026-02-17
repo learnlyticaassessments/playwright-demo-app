@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="{{ current_locale }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ t("app.title") }}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="/" class="logo" data-testid="logo-link">
+                <h1>{{ t("app.title") }}</h1>
+            </a>
+            
+            <ul class="nav-menu" role="menubar">
+                <li role="none"><a href="/" role="menuitem" data-testid="nav-home">{{ t("nav.home") }}</a></li>
+                <li role="none"><a href="/products" role="menuitem" data-testid="nav-products">{{ t("nav.products") }}</a></li>
+                <li role="none"><a href="/forms" role="menuitem" data-testid="nav-forms">{{ t("nav.forms") }}</a></li>
+                <li role="none"><a href="/components" role="menuitem" data-testid="nav-components">{{ t("nav.components") }}</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <a href="/cart" class="cart-link" data-testid="cart-link" aria-label="Shopping cart">
+                    🛒 {{ t("nav.cart") }} <span class="cart-count" data-testid="cart-count">0</span>
+                </a>
+                <a href="/login" class="btn-primary" data-testid="login-button" role="button">{{ t("nav.login") }}</a>
+                <div class="locale-switcher" data-testid="locale-switcher">
+                    <span>{{ t("nav.language") }}:</span>
+                    <a href="{{ url_for('set_locale', locale='en', next=request.path) }}" data-testid="locale-en">EN</a>
+                    <a href="{{ url_for('set_locale', locale='es', next=request.path) }}" data-testid="locale-es">ES</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 {{ t("app.title") }}. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#" data-testid="footer-privacy">{{ t("footer.privacy") }}</a>
+                <a href="#" data-testid="footer-terms">{{ t("footer.terms") }}</a>
+                <a href="#" data-testid="footer-contact">{{ t("footer.contact") }}</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,331 @@
+{% extends "base.html" %}
+
+{% block title %}Components Demo - Playwright Demo Store{% endblock %}
+
+{% block content %}
+<section class="components-demo-container" data-testid="components-demo-container">
+    <h1 role="heading" aria-level="1">UI Components Demo</h1>
+    <p class="page-description">Interactive components for testing various locator strategies</p>
+    
+    <!-- Modal Demo -->
+    <div class="demo-section">
+        <h2 role="heading" aria-level="2">Modal Dialog</h2>
+        <button class="btn-primary" data-testid="open-modal-button" role="button">Open Modal</button>
+        
+        <div class="modal" data-testid="demo-modal" role="dialog" aria-labelledby="modal-title" aria-modal="true" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modal-title" role="heading" aria-level="3">Modal Title</h3>
+                    <button class="modal-close" data-testid="close-modal-button" aria-label="Close modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <p data-testid="modal-message">This is a modal dialog for testing purposes.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-secondary" data-testid="modal-cancel-button" role="button">Cancel</button>
+                    <button class="btn-primary" data-testid="modal-confirm-button" role="button">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dropdown Demo -->
+    <div class="demo-section">
+        <h2 role="heading" aria-level="2">Dropdown Menu</h2>
+        <div class="dropdown" data-testid="dropdown-demo">
+            <button class="dropdown-toggle" data-testid="dropdown-toggle-button" aria-haspopup="true" aria-expanded="false">
+                Select Option
+            </button>
+            <ul class="dropdown-menu" data-testid="dropdown-menu" role="menu" style="display: none;">
+                <li role="none"><a href="#" role="menuitem" data-testid="dropdown-option-1">Option 1</a></li>
+                <li role="none"><a href="#" role="menuitem" data-testid="dropdown-option-2">Option 2</a></li>
+                <li role="none"><a href="#" role="menuitem" data-testid="dropdown-option-3">Option 3</a></li>
+                <li class="dropdown-divider"></li>
+                <li role="none"><a href="#" role="menuitem" data-testid="dropdown-option-delete">Delete</a></li>
+            </ul>
+        </div>
+        <p class="selected-option" data-testid="selected-option" style="margin-top: 10px;">Selected: None</p>
+    </div>
+    
+    <!-- Tabs Demo -->
+    <div class="demo-section">
+        <h2 role="heading" aria-level="2">Tabs</h2>
+        <div class="tabs-container" data-testid="tabs-container">
+            <div class="tabs-header" role="tablist">
+                <button class="tab active" data-testid="tab-profile" role="tab" aria-selected="true" aria-controls="tab-panel-profile">
+                    Profile
+                </button>
+                <button class="tab" data-testid="tab-settings" role="tab" aria-selected="false" aria-controls="tab-panel-settings">
+                    Settings
+                </button>
+                <button class="tab" data-testid="tab-notifications" role="tab" aria-selected="false" aria-controls="tab-panel-notifications">
+                    Notifications
+                </button>
+            </div>
+            
+            <div class="tab-content active" id="tab-panel-profile" data-testid="tab-panel-profile" role="tabpanel">
+                <h3>Profile Information</h3>
+                <p>This is the profile tab content.</p>
+            </div>
+            
+            <div class="tab-content" id="tab-panel-settings" data-testid="tab-panel-settings" role="tabpanel" style="display: none;">
+                <h3>Settings</h3>
+                <p>This is the settings tab content.</p>
+            </div>
+            
+            <div class="tab-content" id="tab-panel-notifications" data-testid="tab-panel-notifications" role="tabpanel" style="display: none;">
+                <h3>Notifications</h3>
+                <p>This is the notifications tab content.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Alert Demo -->
+    <div class="demo-section">
+        <h2 role="heading" aria-level="2">Alert Messages</h2>
+        <button class="btn-primary" data-testid="show-success-alert" role="button">Show Success</button>
+        <button class="btn-primary" data-testid="show-error-alert" role="button">Show Error</button>
+        <button class="btn-primary" data-testid="show-warning-alert" role="button">Show Warning</button>
+        
+        <div class="alerts-container" data-testid="alerts-container" style="margin-top: 15px;"></div>
+    </div>
+    
+    <!-- Accordion Demo -->
+    <div class="demo-section">
+        <h2 role="heading" aria-level="2">Accordion</h2>
+        <div class="accordion" data-testid="accordion-demo">
+            <div class="accordion-item" data-testid="accordion-item-1">
+                <button class="accordion-header" data-testid="accordion-header-1" aria-expanded="false">
+                    Section 1
+                </button>
+                <div class="accordion-content" data-testid="accordion-content-1" style="display: none;">
+                    <p>Content for section 1</p>
+                </div>
+            </div>
+            
+            <div class="accordion-item" data-testid="accordion-item-2">
+                <button class="accordion-header" data-testid="accordion-header-2" aria-expanded="false">
+                    Section 2
+                </button>
+                <div class="accordion-content" data-testid="accordion-content-2" style="display: none;">
+                    <p>Content for section 2</p>
+                </div>
+            </div>
+            
+            <div class="accordion-item" data-testid="accordion-item-3">
+                <button class="accordion-header" data-testid="accordion-header-3" aria-expanded="false">
+                    Section 3
+                </button>
+                <div class="accordion-content" data-testid="accordion-content-3" style="display: none;">
+                    <p>Content for section 3</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Data Table Demo -->
+    <div class="demo-section">
+        <h2 role="heading" aria-level="2">Data Table</h2>
+        <table class="data-table" data-testid="data-table">
+            <thead>
+                <tr role="row">
+                    <th role="columnheader" data-testid="table-header-id">ID</th>
+                    <th role="columnheader" data-testid="table-header-name">Name</th>
+                    <th role="columnheader" data-testid="table-header-status">Status</th>
+                    <th role="columnheader" data-testid="table-header-actions">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr role="row" data-testid="table-row-1">
+                    <td role="cell" data-testid="cell-id-1">1</td>
+                    <td role="cell" data-testid="cell-name-1">John Doe</td>
+                    <td role="cell" data-testid="cell-status-1"><span class="status-active">Active</span></td>
+                    <td role="cell" data-testid="cell-actions-1">
+                        <button class="btn-small" data-testid="edit-row-1" role="button">Edit</button>
+                        <button class="btn-small btn-danger" data-testid="delete-row-1" role="button">Delete</button>
+                    </td>
+                </tr>
+                <tr role="row" data-testid="table-row-2">
+                    <td role="cell" data-testid="cell-id-2">2</td>
+                    <td role="cell" data-testid="cell-name-2">Jane Smith</td>
+                    <td role="cell" data-testid="cell-status-2"><span class="status-active">Active</span></td>
+                    <td role="cell" data-testid="cell-actions-2">
+                        <button class="btn-small" data-testid="edit-row-2" role="button">Edit</button>
+                        <button class="btn-small btn-danger" data-testid="delete-row-2" role="button">Delete</button>
+                    </td>
+                </tr>
+                <tr role="row" data-testid="table-row-3">
+                    <td role="cell" data-testid="cell-id-3">3</td>
+                    <td role="cell" data-testid="cell-name-3">Bob Johnson</td>
+                    <td role="cell" data-testid="cell-status-3"><span class="status-inactive">Inactive</span></td>
+                    <td role="cell" data-testid="cell-actions-3">
+                        <button class="btn-small" data-testid="edit-row-3" role="button">Edit</button>
+                        <button class="btn-small btn-danger" data-testid="delete-row-3" role="button">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Progress Bar Demo -->
+    <div class="demo-section">
+        <h2 role="heading" aria-level="2">Progress Bar</h2>
+        <div class="progress-container">
+            <div class="progress-bar" data-testid="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-fill" data-testid="progress-fill" style="width: 0%;">
+                    <span class="progress-text" data-testid="progress-text">0%</span>
+                </div>
+            </div>
+        </div>
+        <button class="btn-primary" data-testid="start-progress" role="button">Start Progress</button>
+    </div>
+    
+    <!-- Toast Notifications -->
+    <div class="demo-section">
+        <h2 role="heading" aria-level="2">Toast Notifications</h2>
+        <button class="btn-primary" data-testid="show-toast" role="button">Show Toast</button>
+        
+        <div class="toast-container" data-testid="toast-container"></div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Modal functionality
+const modal = document.querySelector('[data-testid="demo-modal"]');
+const openModalBtn = document.querySelector('[data-testid="open-modal-button"]');
+const closeModalBtn = document.querySelector('[data-testid="close-modal-button"]');
+const cancelBtn = document.querySelector('[data-testid="modal-cancel-button"]');
+const confirmBtn = document.querySelector('[data-testid="modal-confirm-button"]');
+
+openModalBtn.addEventListener('click', () => {
+    modal.style.display = 'flex';
+});
+
+function closeModal() {
+    modal.style.display = 'none';
+}
+
+closeModalBtn.addEventListener('click', closeModal);
+cancelBtn.addEventListener('click', closeModal);
+confirmBtn.addEventListener('click', () => {
+    alert('Confirmed!');
+    closeModal();
+});
+
+// Dropdown functionality
+const dropdownToggle = document.querySelector('[data-testid="dropdown-toggle-button"]');
+const dropdownMenu = document.querySelector('[data-testid="dropdown-menu"]');
+
+dropdownToggle.addEventListener('click', () => {
+    const isOpen = dropdownMenu.style.display === 'block';
+    dropdownMenu.style.display = isOpen ? 'none' : 'block';
+    dropdownToggle.setAttribute('aria-expanded', !isOpen);
+});
+
+document.querySelectorAll('[data-testid^="dropdown-option-"]').forEach(option => {
+    option.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.querySelector('[data-testid="selected-option"]').textContent = `Selected: ${e.target.textContent}`;
+        dropdownMenu.style.display = 'none';
+        dropdownToggle.setAttribute('aria-expanded', 'false');
+    });
+});
+
+// Tabs functionality
+document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+        document.querySelectorAll('.tab').forEach(t => {
+            t.classList.remove('active');
+            t.setAttribute('aria-selected', 'false');
+        });
+        document.querySelectorAll('.tab-content').forEach(c => {
+            c.style.display = 'none';
+            c.classList.remove('active');
+        });
+        
+        this.classList.add('active');
+        this.setAttribute('aria-selected', 'true');
+        const panelId = this.getAttribute('aria-controls');
+        const panel = document.getElementById(panelId);
+        panel.style.display = 'block';
+        panel.classList.add('active');
+    });
+});
+
+// Alert functionality
+function showAlert(type, message) {
+    const container = document.querySelector('[data-testid="alerts-container"]');
+    const alert = document.createElement('div');
+    alert.className = `alert alert-${type}`;
+    alert.setAttribute('role', 'alert');
+    alert.setAttribute('data-testid', `alert-${type}`);
+    alert.textContent = message;
+    
+    container.appendChild(alert);
+    
+    setTimeout(() => alert.remove(), 3000);
+}
+
+document.querySelector('[data-testid="show-success-alert"]').addEventListener('click', () => {
+    showAlert('success', 'Success! Operation completed.');
+});
+
+document.querySelector('[data-testid="show-error-alert"]').addEventListener('click', () => {
+    showAlert('error', 'Error! Something went wrong.');
+});
+
+document.querySelector('[data-testid="show-warning-alert"]').addEventListener('click', () => {
+    showAlert('warning', 'Warning! Please check your input.');
+});
+
+// Accordion functionality
+document.querySelectorAll('.accordion-header').forEach(header => {
+    header.addEventListener('click', function() {
+        const content = this.nextElementSibling;
+        const isOpen = content.style.display === 'block';
+        
+        content.style.display = isOpen ? 'none' : 'block';
+        this.setAttribute('aria-expanded', !isOpen);
+    });
+});
+
+// Progress bar functionality
+document.querySelector('[data-testid="start-progress"]').addEventListener('click', function() {
+    let progress = 0;
+    const progressFill = document.querySelector('[data-testid="progress-fill"]');
+    const progressText = document.querySelector('[data-testid="progress-text"]');
+    const progressBar = document.querySelector('[data-testid="progress-bar"]');
+    
+    const interval = setInterval(() => {
+        progress += 10;
+        progressFill.style.width = progress + '%';
+        progressText.textContent = progress + '%';
+        progressBar.setAttribute('aria-valuenow', progress);
+        
+        if (progress >= 100) {
+            clearInterval(interval);
+        }
+    }, 500);
+});
+
+// Toast notification
+document.querySelector('[data-testid="show-toast"]').addEventListener('click', () => {
+    const container = document.querySelector('[data-testid="toast-container"]');
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.setAttribute('data-testid', 'toast-notification');
+    toast.setAttribute('role', 'status');
+    toast.textContent = 'This is a toast notification!';
+    
+    container.appendChild(toast);
+    
+    setTimeout(() => toast.classList.add('show'), 100);
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+});
+</script>
+{% endblock %}

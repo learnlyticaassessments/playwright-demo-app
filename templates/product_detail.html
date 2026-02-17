@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.name }} - Playwright Demo Store{% endblock %}
+
+{% block content %}
+<section class="product-detail-container" data-testid="product-detail-container">
+    <div class="product-detail">
+        <div class="product-image-large">
+            <span class="product-placeholder-large">📦</span>
+        </div>
+        
+        <div class="product-info-detail">
+            <h1 role="heading" aria-level="1" data-testid="product-detail-name">{{ product.name }}</h1>
+            <p class="product-category" data-testid="product-detail-category">{{ product.category }}</p>
+            <p class="product-price-large" data-testid="product-detail-price">${{ product.price }}</p>
+            <p class="product-stock" data-testid="product-detail-stock">{{ product.stock }} in stock</p>
+            
+            <button 
+                class="btn-primary btn-large" 
+                data-testid="add-to-cart-detail"
+                onclick="addToCart({{ product.id }})"
+            >
+                Add to Cart
+            </button>
+        </div>
+    </div>
+</section>
+
+<script>
+function addToCart(productId) {
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    cart.push(productId);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    
+    document.querySelector('[data-testid="cart-count"]').textContent = cart.length;
+    
+    const btn = document.querySelector('[data-testid="add-to-cart-detail"]');
+    btn.textContent = '✓ Added to Cart';
+    setTimeout(() => btn.textContent = 'Add to Cart', 2000);
+}
+</script>
+{% endblock %}

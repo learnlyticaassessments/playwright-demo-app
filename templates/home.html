@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Playwright Demo Store{% endblock %}
+
+{% block content %}
+<section class="hero" data-testid="hero-section">
+    <div class="hero-content">
+        <h1 role="heading" aria-level="1">Welcome to Demo Store</h1>
+        <p class="hero-subtitle">Your one-stop shop for quality electronics and accessories</p>
+        <div class="hero-actions">
+            <a href="/products" class="btn-large btn-primary" role="button" data-testid="shop-now-button">
+                Shop Now
+            </a>
+            <a href="/register" class="btn-large btn-secondary" role="button" data-testid="register-button">
+                Create Account
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="features" data-testid="features-section">
+    <h2 role="heading" aria-level="2">Why Choose Us</h2>
+    <div class="features-grid">
+        <div class="feature-card" data-testid="feature-fast-shipping">
+            <div class="feature-icon">🚚</div>
+            <h3>Fast Shipping</h3>
+            <p>Get your orders delivered within 2-3 business days</p>
+        </div>
+        
+        <div class="feature-card" data-testid="feature-secure-payment">
+            <div class="feature-icon">🔒</div>
+            <h3>Secure Payment</h3>
+            <p>Your payment information is always protected</p>
+        </div>
+        
+        <div class="feature-card" data-testid="feature-quality">
+            <div class="feature-icon">⭐</div>
+            <h3>Quality Products</h3>
+            <p>We only sell high-quality, tested products</p>
+        </div>
+        
+        <div class="feature-card" data-testid="feature-support">
+            <div class="feature-icon">💬</div>
+            <h3>24/7 Support</h3>
+            <p>Our customer service team is always here to help</p>
+        </div>
+    </div>
+</section>
+
+<section class="categories" data-testid="categories-section">
+    <h2 role="heading" aria-level="2">Shop by Category</h2>
+    <div class="categories-grid">
+        <a href="/products?category=Electronics" class="category-card" data-testid="category-electronics">
+            <div class="category-icon">💻</div>
+            <h3>Electronics</h3>
+            <p>Laptops, monitors, and more</p>
+        </a>
+        
+        <a href="/products?category=Accessories" class="category-card" data-testid="category-accessories">
+            <div class="category-icon">⌨️</div>
+            <h3>Accessories</h3>
+            <p>Keyboards, mice, cables</p>
+        </a>
+    </div>
+</section>
+
+<section class="newsletter" data-testid="locale-format-section">
+    <h2 role="heading" aria-level="2">{{ t("i18n.demo_title") }}</h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <h3>{{ t("i18n.demo_date") }}</h3>
+            <p data-testid="locale-demo-date">{{ demo_localized_date }}</p>
+        </div>
+        <div class="feature-card">
+            <h3>{{ t("i18n.demo_number") }}</h3>
+            <p data-testid="locale-demo-number">{{ demo_localized_number }}</p>
+        </div>
+        <div class="feature-card">
+            <h3>{{ t("i18n.demo_currency") }}</h3>
+            <p data-testid="locale-demo-currency">{{ demo_localized_currency }}</p>
+        </div>
+    </div>
+</section>
+
+<section class="newsletter" data-testid="newsletter-section">
+    <h2 role="heading" aria-level="2">Subscribe to Our Newsletter</h2>
+    <p>Get the latest deals and product updates</p>
+    <form class="newsletter-form" data-testid="newsletter-form">
+        <input 
+            type="email" 
+            name="email" 
+            placeholder="Enter your email" 
+            aria-label="Email address"
+            data-testid="newsletter-email-input"
+            required
+        />
+        <button type="submit" class="btn-primary" data-testid="newsletter-subscribe-button">
+            Subscribe
+        </button>
+    </form>
+    <div class="newsletter-message" data-testid="newsletter-message" style="display: none;"></div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.querySelector('[data-testid="newsletter-form"]').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const messageDiv = document.querySelector('[data-testid="newsletter-message"]');
+    messageDiv.textContent = 'Thank you for subscribing!';
+    messageDiv.style.display = 'block';
+    messageDiv.style.color = 'green';
+    this.reset();
+});
+</script>
+{% endblock %}

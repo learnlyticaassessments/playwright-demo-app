@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Profile - Playwright Demo Store{% endblock %}
+
+{% block content %}
+<section class="profile-container" data-testid="profile-container">
+    <h1 role="heading" aria-level="1">My Profile</h1>
+    
+    <form class="profile-form" id="profileForm" data-testid="profile-form">
+        <div class="form-group">
+            <label for="profile-username">Username</label>
+            <input 
+                type="text" 
+                id="profile-username" 
+                value="{{ username }}"
+                data-testid="profile-username-input"
+                disabled
+            />
+        </div>
+        
+        <div class="form-group">
+            <label for="profile-email">Email</label>
+            <input 
+                type="email" 
+                id="profile-email" 
+                value="{{ email }}"
+                data-testid="profile-email-input"
+            />
+        </div>
+        
+        <div class="profile-message" data-testid="profile-message" role="status" style="display: none;"></div>
+        
+        <button type="submit" class="btn-primary" data-testid="update-profile-button">
+            Update Profile
+        </button>
+    </form>
+</section>
+
+<script>
+document.getElementById('profileForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const email = document.querySelector('[data-testid="profile-email-input"]').value;
+    const messageDiv = document.querySelector('[data-testid="profile-message"]');
+    
+    try {
+        const response = await fetch('/api/update-profile', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ email })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            messageDiv.textContent = 'Profile updated successfully!';
+            messageDiv.style.color = 'green';
+            messageDiv.style.display = 'block';
+        }
+    } catch (error) {
+        messageDiv.textContent = 'Failed to update profile';
+        messageDiv.style.color = 'red';
+        messageDiv.style.display = 'block';
+    }
+});
+</script>
+{% endblock %}

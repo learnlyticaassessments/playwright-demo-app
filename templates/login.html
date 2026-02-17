@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}{{ t("nav.login") }} - {{ t("app.title") }}{% endblock %}
+
+{% block content %}
+<section class="auth-container" data-testid="login-container">
+    <div class="auth-card">
+        <h1 role="heading" aria-level="1">{{ t("auth.login_title") }}</h1>
+        
+        <form class="auth-form" id="loginForm" data-testid="login-form">
+            <div class="form-group">
+                <label for="username">{{ t("auth.username") }}</label>
+                <input 
+                    type="text" 
+                    id="username" 
+                    name="username" 
+                    data-testid="username-input"
+                    aria-label="{{ t('auth.username') }}"
+                    required
+                    autocomplete="username"
+                />
+            </div>
+            
+            <div class="form-group">
+                <label for="password">{{ t("auth.password") }}</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    data-testid="password-input"
+                    aria-label="{{ t('auth.password') }}"
+                    required
+                    autocomplete="current-password"
+                />
+            </div>
+            
+            <div class="form-group checkbox-group">
+                <input 
+                    type="checkbox" 
+                    id="remember" 
+                    name="remember"
+                    data-testid="remember-checkbox"
+                    role="checkbox"
+                    aria-label="{{ t('auth.remember_me') }}"
+                />
+                <label for="remember">{{ t("auth.remember_me") }}</label>
+            </div>
+            
+            <div class="error-message" data-testid="error-message" role="alert" style="display: none;"></div>
+            
+            <button 
+                type="submit" 
+                class="btn-primary btn-full" 
+                data-testid="submit-login-button"
+                role="button"
+            >
+                {{ t("auth.sign_in") }}
+            </button>
+        </form>
+        
+        <div class="auth-footer">
+            <p>{{ t("auth.no_account") }} <a href="/register" data-testid="register-link">{{ t("auth.register_here") }}</a></p>
+            <a href="#" data-testid="forgot-password-link">{{ t("auth.forgot_password") }}</a>
+        </div>
+        
+        <div class="test-credentials" data-testid="test-credentials">
+            <h3>{{ t("auth.test_credentials") }}</h3>
+            <p><strong>User:</strong> testuser / password123</p>
+            <p><strong>Admin:</strong> admin / admin123</p>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const username = document.querySelector('[data-testid="username-input"]').value;
+    const password = document.querySelector('[data-testid="password-input"]').value;
+    const errorDiv = document.querySelector('[data-testid="error-message"]');
+    const GENERIC_ERROR = {{ t("errors.generic")|tojson }};
+    
+    try {
+        const response = await fetch('/api/login', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ username, password })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            window.location.href = '/dashboard';
+        } else {
+            errorDiv.textContent = data.message;
+            errorDiv.style.display = 'block';
+        }
+    } catch (error) {
+        errorDiv.textContent = GENERIC_ERROR;
+        errorDiv.style.display = 'block';
+    }
+});
+</script>
+{% endblock %}

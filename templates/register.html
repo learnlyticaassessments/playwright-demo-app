@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+
+{% block title %}{{ t("auth.create_account") }} - {{ t("app.title") }}{% endblock %}
+
+{% block content %}
+<section class="auth-container" data-testid="register-container">
+    <div class="auth-card">
+        <h1 role="heading" aria-level="1">{{ t("auth.register_title") }}</h1>
+        
+        <form class="auth-form" id="registerForm" data-testid="register-form">
+            <div class="form-group">
+                <label for="reg-username">{{ t("auth.username") }}</label>
+                <input 
+                    type="text" 
+                    id="reg-username" 
+                    name="username" 
+                    data-testid="register-username-input"
+                    aria-label="{{ t('auth.username') }}"
+                    required
+                    minlength="3"
+                />
+            </div>
+            
+            <div class="form-group">
+                <label for="reg-email">{{ t("auth.email") }}</label>
+                <input 
+                    type="email" 
+                    id="reg-email" 
+                    name="email" 
+                    data-testid="register-email-input"
+                    aria-label="{{ t('auth.email') }}"
+                    required
+                />
+            </div>
+            
+            <div class="form-group">
+                <label for="reg-password">{{ t("auth.password") }}</label>
+                <input 
+                    type="password" 
+                    id="reg-password" 
+                    name="password" 
+                    data-testid="register-password-input"
+                    aria-label="{{ t('auth.password') }}"
+                    required
+                    minlength="6"
+                />
+            </div>
+            
+            <div class="form-group">
+                <label for="reg-confirm-password">{{ t("auth.confirm_password") }}</label>
+                <input 
+                    type="password" 
+                    id="reg-confirm-password" 
+                    name="confirm_password" 
+                    data-testid="register-confirm-password-input"
+                    aria-label="{{ t('auth.confirm_password') }}"
+                    required
+                />
+            </div>
+            
+            <div class="form-group checkbox-group">
+                <input 
+                    type="checkbox" 
+                    id="terms" 
+                    name="terms"
+                    data-testid="terms-checkbox"
+                    role="checkbox"
+                    aria-label="{{ t('auth.terms_accept') }}"
+                    required
+                />
+                <label for="terms">{{ t("auth.terms_accept") }}</label>
+            </div>
+            
+            <div class="error-message" data-testid="register-error-message" role="alert" style="display: none;"></div>
+            <div class="success-message" data-testid="register-success-message" role="status" style="display: none;"></div>
+            
+            <button 
+                type="submit" 
+                class="btn-primary btn-full" 
+                data-testid="submit-register-button"
+                role="button"
+            >
+                {{ t("auth.create_account") }}
+            </button>
+        </form>
+        
+        <div class="auth-footer">
+            <p>{{ t("auth.already_account") }} <a href="/login" data-testid="login-link">{{ t("auth.login_here") }}</a></p>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('registerForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const username = document.querySelector('[data-testid="register-username-input"]').value;
+    const email = document.querySelector('[data-testid="register-email-input"]').value;
+    const password = document.querySelector('[data-testid="register-password-input"]').value;
+    const confirmPassword = document.querySelector('[data-testid="register-confirm-password-input"]').value;
+    const terms = document.querySelector('[data-testid="terms-checkbox"]').checked;
+    
+    const errorDiv = document.querySelector('[data-testid="register-error-message"]');
+    const successDiv = document.querySelector('[data-testid="register-success-message"]');
+    const PASSWORD_MISMATCH = {{ t("errors.password_mismatch")|tojson }};
+    const ACCEPT_TERMS = {{ t("errors.accept_terms")|tojson }};
+    const REGISTER_SUCCESS = {{ t("api.register.success")|tojson }};
+    const GENERIC_ERROR = {{ t("errors.generic")|tojson }};
+    
+    errorDiv.style.display = 'none';
+    successDiv.style.display = 'none';
+    
+    if (password !== confirmPassword) {
+        errorDiv.textContent = PASSWORD_MISMATCH;
+        errorDiv.style.display = 'block';
+        return;
+    }
+    
+    if (!terms) {
+        errorDiv.textContent = ACCEPT_TERMS;
+        errorDiv.style.display = 'block';
+        return;
+    }
+    
+    try {
+        const response = await fetch('/api/register', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ username, email, password })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            successDiv.textContent = `${REGISTER_SUCCESS}! Redirecting to login...`;
+            successDiv.style.display = 'block';
+            setTimeout(() => window.location.href = '/login', 2000);
+        } else {
+            errorDiv.textContent = data.message;
+            errorDiv.style.display = 'block';
+        }
+    } catch (error) {
+        errorDiv.textContent = GENERIC_ERROR;
+        errorDiv.style.display = 'block';
+    }
+});
+</script>
+{% endblock %}

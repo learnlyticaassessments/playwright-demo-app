@@ -1,0 +1,364 @@
+{% extends "base.html" %}
+
+{% block title %}Forms Demo - Playwright Demo Store{% endblock %}
+
+{% block content %}
+<section class="forms-demo-container" data-testid="forms-demo-container">
+    <h1 role="heading" aria-level="1">Forms & Input Elements Demo</h1>
+    <p class="page-description">This page demonstrates various form elements and locator strategies</p>
+    
+    <div class="demo-section">
+        <h2 role="heading" aria-level="2">Text Inputs</h2>
+        <form class="demo-form" data-testid="text-inputs-form">
+            <div class="form-group">
+                <label for="first-name">First Name</label>
+                <input 
+                    type="text" 
+                    id="first-name" 
+                    name="first_name"
+                    data-testid="first-name-input"
+                    placeholder="Enter first name"
+                />
+            </div>
+            
+            <div class="form-group">
+                <label for="last-name">Last Name</label>
+                <input 
+                    type="text" 
+                    id="last-name" 
+                    name="last_name"
+                    data-testid="last-name-input"
+                    placeholder="Enter last name"
+                />
+            </div>
+            
+            <div class="form-group">
+                <label for="email-demo">Email Address</label>
+                <input 
+                    type="email" 
+                    id="email-demo" 
+                    name="email"
+                    data-testid="email-demo-input"
+                    placeholder="user@example.com"
+                    aria-describedby="email-help"
+                />
+                <small id="email-help" class="form-help">We'll never share your email</small>
+            </div>
+        </form>
+    </div>
+    
+    <div class="demo-section">
+        <h2 role="heading" aria-level="2">Selection Controls</h2>
+        <form class="demo-form" data-testid="selection-controls-form">
+            <div class="form-group">
+                <label for="country-select">Country</label>
+                <select id="country-select" data-testid="country-select" name="country">
+                    <option value="">Select a country</option>
+                    <option value="us">United States</option>
+                    <option value="uk">United Kingdom</option>
+                    <option value="ca">Canada</option>
+                    <option value="au">Australia</option>
+                    <option value="de">Germany</option>
+                    <option value="fr">France</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Size</label>
+                <div class="radio-group">
+                    <label class="radio-label">
+                        <input 
+                            type="radio" 
+                            name="size" 
+                            value="small"
+                            data-testid="size-small-radio"
+                            role="radio"
+                            aria-label="Small size"
+                        />
+                        Small
+                    </label>
+                    <label class="radio-label">
+                        <input 
+                            type="radio" 
+                            name="size" 
+                            value="medium"
+                            data-testid="size-medium-radio"
+                            role="radio"
+                            aria-label="Medium size"
+                        />
+                        Medium
+                    </label>
+                    <label class="radio-label">
+                        <input 
+                            type="radio" 
+                            name="size" 
+                            value="large"
+                            data-testid="size-large-radio"
+                            role="radio"
+                            aria-label="Large size"
+                        />
+                        Large
+                    </label>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Preferences</label>
+                <div class="checkbox-group">
+                    <label class="checkbox-label">
+                        <input 
+                            type="checkbox" 
+                            name="newsletter"
+                            data-testid="newsletter-checkbox"
+                            role="checkbox"
+                            aria-label="Subscribe to newsletter"
+                        />
+                        Subscribe to newsletter
+                    </label>
+                    <label class="checkbox-label">
+                        <input 
+                            type="checkbox" 
+                            name="promotions"
+                            data-testid="promotions-checkbox"
+                            role="checkbox"
+                            aria-label="Receive promotional emails"
+                        />
+                        Receive promotional emails
+                    </label>
+                    <label class="checkbox-label">
+                        <input 
+                            type="checkbox" 
+                            name="updates"
+                            data-testid="updates-checkbox"
+                            role="checkbox"
+                            aria-label="Product updates"
+                        />
+                        Product updates
+                    </label>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <div class="demo-section">
+        <h2 role="heading" aria-level="2">Date & Time Inputs</h2>
+        <form class="demo-form" data-testid="datetime-form">
+            <div class="form-group">
+                <label for="birth-date">Date of Birth</label>
+                <input 
+                    type="date" 
+                    id="birth-date" 
+                    name="birth_date"
+                    data-testid="birth-date-input"
+                />
+            </div>
+            
+            <div class="form-group">
+                <label for="appointment-time">Appointment Time</label>
+                <input 
+                    type="time" 
+                    id="appointment-time" 
+                    name="appointment_time"
+                    data-testid="appointment-time-input"
+                />
+            </div>
+        </form>
+    </div>
+    
+    <div class="demo-section">
+        <h2 role="heading" aria-level="2">Text Area</h2>
+        <form class="demo-form" data-testid="textarea-form">
+            <div class="form-group">
+                <label for="comments">Comments</label>
+                <textarea 
+                    id="comments" 
+                    name="comments"
+                    data-testid="comments-textarea"
+                    rows="5"
+                    placeholder="Enter your comments here..."
+                    aria-label="Comments"
+                ></textarea>
+            </div>
+        </form>
+    </div>
+    
+    <div class="demo-section">
+        <h2 role="heading" aria-level="2">File Upload</h2>
+        <form class="demo-form" data-testid="file-upload-form">
+            <div class="form-group">
+                <label for="file-upload">Upload Document</label>
+                <input 
+                    type="file" 
+                    id="file-upload" 
+                    name="document"
+                    data-testid="file-upload-input"
+                    aria-label="Upload document"
+                />
+            </div>
+            
+            <div class="form-group">
+                <label for="image-upload">Upload Image</label>
+                <input 
+                    type="file" 
+                    id="image-upload" 
+                    name="image"
+                    data-testid="image-upload-input"
+                    accept="image/*"
+                    aria-label="Upload image"
+                />
+            </div>
+        </form>
+    </div>
+    
+    <div class="demo-section">
+        <h2 role="heading" aria-level="2">Form Validation</h2>
+        <form class="demo-form" id="validation-form" data-testid="validation-form">
+            <div class="form-group">
+                <label for="required-field">Required Field *</label>
+                <input 
+                    type="text" 
+                    id="required-field" 
+                    name="required_field"
+                    data-testid="required-field-input"
+                    required
+                />
+            </div>
+            
+            <div class="form-group">
+                <label for="min-length-field">Minimum Length (5 chars) *</label>
+                <input 
+                    type="text" 
+                    id="min-length-field" 
+                    name="min_length"
+                    data-testid="min-length-input"
+                    minlength="5"
+                    required
+                />
+            </div>
+            
+            <div class="form-group">
+                <label for="number-field">Number (1-100) *</label>
+                <input 
+                    type="number" 
+                    id="number-field" 
+                    name="number"
+                    data-testid="number-input"
+                    min="1"
+                    max="100"
+                    required
+                />
+            </div>
+            
+            <div class="validation-message" data-testid="validation-message" role="alert" style="display: none;"></div>
+            
+            <button 
+                type="submit" 
+                class="btn-primary" 
+                data-testid="submit-validation-form"
+                role="button"
+            >
+                Submit Form
+            </button>
+        </form>
+    </div>
+    
+    <div class="demo-section">
+        <h2 role="heading" aria-level="2">Multi-Step Form</h2>
+        <div class="multistep-form" data-testid="multistep-form">
+            <div class="steps-indicator">
+                <div class="step active" data-testid="step-indicator-1">Step 1</div>
+                <div class="step" data-testid="step-indicator-2">Step 2</div>
+                <div class="step" data-testid="step-indicator-3">Step 3</div>
+            </div>
+            
+            <div class="step-content active" data-step="1" data-testid="step-1">
+                <h3>Personal Information</h3>
+                <div class="form-group">
+                    <label for="step1-name">Full Name</label>
+                    <input 
+                        type="text" 
+                        id="step1-name" 
+                        data-testid="step1-name-input"
+                    />
+                </div>
+                <button class="btn-primary" data-testid="next-step-1" role="button">Next</button>
+            </div>
+            
+            <div class="step-content" data-step="2" data-testid="step-2" style="display: none;">
+                <h3>Contact Information</h3>
+                <div class="form-group">
+                    <label for="step2-phone">Phone Number</label>
+                    <input 
+                        type="tel" 
+                        id="step2-phone" 
+                        data-testid="step2-phone-input"
+                    />
+                </div>
+                <button class="btn-secondary" data-testid="prev-step-2" role="button">Previous</button>
+                <button class="btn-primary" data-testid="next-step-2" role="button">Next</button>
+            </div>
+            
+            <div class="step-content" data-step="3" data-testid="step-3" style="display: none;">
+                <h3>Confirmation</h3>
+                <p>Review your information and submit</p>
+                <button class="btn-secondary" data-testid="prev-step-3" role="button">Previous</button>
+                <button class="btn-primary" data-testid="submit-multistep" role="button">Submit</button>
+            </div>
+            
+            <div class="multistep-success" data-testid="multistep-success" style="display: none;">
+                <p>✓ Form submitted successfully!</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Validation form handler
+document.getElementById('validation-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const message = document.querySelector('[data-testid="validation-message"]');
+    message.textContent = 'Form is valid and submitted successfully!';
+    message.style.display = 'block';
+    message.style.color = 'green';
+});
+
+// Multi-step form logic
+let currentStep = 1;
+
+function showStep(step) {
+    document.querySelectorAll('.step-content').forEach(content => {
+        content.style.display = 'none';
+        content.classList.remove('active');
+    });
+    
+    document.querySelectorAll('.step').forEach(indicator => {
+        indicator.classList.remove('active');
+    });
+    
+    const stepContent = document.querySelector(`[data-step="${step}"]`);
+    if (stepContent) {
+        stepContent.style.display = 'block';
+        stepContent.classList.add('active');
+    }
+    
+    const stepIndicator = document.querySelector(`[data-testid="step-indicator-${step}"]`);
+    if (stepIndicator) {
+        stepIndicator.classList.add('active');
+    }
+    
+    currentStep = step;
+}
+
+document.querySelector('[data-testid="next-step-1"]').addEventListener('click', () => showStep(2));
+document.querySelector('[data-testid="prev-step-2"]').addEventListener('click', () => showStep(1));
+document.querySelector('[data-testid="next-step-2"]').addEventListener('click', () => showStep(3));
+document.querySelector('[data-testid="prev-step-3"]').addEventListener('click', () => showStep(2));
+
+document.querySelector('[data-testid="submit-multistep"]').addEventListener('click', function() {
+    document.querySelectorAll('.step-content').forEach(content => content.style.display = 'none');
+    document.querySelector('[data-testid="multistep-success"]').style.display = 'block';
+});
+</script>
+{% endblock %}

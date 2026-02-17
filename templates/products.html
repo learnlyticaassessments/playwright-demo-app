@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block title %}Products - Playwright Demo Store{% endblock %}
+
+{% block content %}
+<section class="products-container" data-testid="products-container">
+    <div class="products-header">
+        <h1 role="heading" aria-level="1">Our Products</h1>
+        
+        <div class="products-filters">
+            <div class="filter-group">
+                <label for="category-filter">Category:</label>
+                <select id="category-filter" data-testid="category-filter" aria-label="Filter by category">
+                    <option value="all">All Categories</option>
+                    <option value="Electronics" {% if category == 'Electronics' %}selected{% endif %}>Electronics</option>
+                    <option value="Accessories" {% if category == 'Accessories' %}selected{% endif %}>Accessories</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="search-input">Search:</label>
+                <input 
+                    type="text" 
+                    id="search-input" 
+                    data-testid="search-input"
+                    placeholder="Search products..."
+                    aria-label="Search products"
+                />
+            </div>
+            
+            <button class="btn-secondary" data-testid="clear-filters-button" role="button">
+                Clear Filters
+            </button>
+        </div>
+    </div>
+    
+    <div class="products-grid" data-testid="products-grid" role="list">
+        <!-- Products will be loaded here -->
+    </div>
+    
+    <div class="loading-indicator" data-testid="loading-indicator" style="display: none;">
+        Loading products...
+    </div>
+    
+    <div class="no-products" data-testid="no-products-message" style="display: none;">
+        No products found matching your criteria.
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let currentCategory = '{{ category }}';
+let currentSearch = '';
+const currentLocale = {{ current_locale|tojson }};
+const localeTag = currentLocale === "es" ? "es-ES" : "en-US";
+const currencyCode = currentLocale === "es" ? "EUR" : "USD";
+
+function formatCurrency(value) {
+    return new Intl.NumberFormat(localeTag, {
+        style: 'currency',
+        currency: currencyCode,
+        minimumFractionDigits: 2
+    }).format(value);
+}
+
+async function loadProducts() {
+    const loadingDiv = document.querySelector('[data-testid="loading-indicator"]');
+    const noProductsDiv = document.querySelector('[data-testid="no-products-message"]');
+    const grid = document.querySelector('[data-testid="products-grid"]');
+    
+    loadingDiv.style.display = 'block';
+    grid.innerHTML = '';
+    noProductsDiv.style.display = 'none';
+    
+    try {
+        const params = new URLSearchParams();
+        if (currentCategory !== 'all') params.append('category', currentCategory);
+        if (currentSearch) params.append('search', currentSearch);
+        
+        const response = await fetch(`/api/products?${params}`);
+        const products = await response.json();
+        
+        loadingDiv.style.display = 'none';
+        
+        if (products.length === 0) {
+            noProductsDiv.style.display = 'block';
+            return;
+        }
+        
+        products.forEach(product => {
+            const productCard = document.createElement('article');
+            productCard.className = 'product-card';
+            productCard.setAttribute('data-testid', `product-${product.id}`);
+            productCard.setAttribute('role', 'listitem');
+            
+            productCard.innerHTML = `
+                <div class="product-image">
+                    <span class="product-placeholder">📦</span>
+                </div>
+                <div class="product-info">
+                    <h3 data-testid="product-name-${product.id}">${product.name}</h3>
+                    <p class="product-category" data-testid="product-category-${product.id}">${product.category}</p>
+                    <p class="product-price" data-testid="product-price-${product.id}">${formatCurrency(product.price)}</p>
+                    <p class="product-stock ${product.stock < 50 ? 'low-stock' : ''}" data-testid="product-stock-${product.id}">
+                        ${product.stock} in stock
+                    </p>
+                </div>
+                <div class="product-actions">
+                    <button 
+                        class="btn-primary" 
+                        data-testid="add-to-cart-${product.id}"
+                        data-product-id="${product.id}"
+                        role="button"
+                        aria-label="Add ${product.name} to cart"
+                    >
+                        Add to Cart
+                    </button>
+                    <a 
+                        href="/product/${product.id}" 
+                        class="btn-secondary"
+                        data-testid="view-details-${product.id}"
+                        role="button"
+                    >
+                        View Details
+                    </a>
+                </div>
+            `;
+            
+            grid.appendChild(productCard);
+        });
+        
+        // Add click handlers for add to cart buttons
+        document.querySelectorAll('[data-testid^="add-to-cart-"]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                addToCart(this.dataset.productId);
+            });
+        });
+        
+    } catch (error) {
+        loadingDiv.style.display = 'none';
+        grid.innerHTML = '<p class="error">Failed to load products. Please try again.</p>';
+    }
+}
+
+function addToCart(productId) {
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    cart.push(productId);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    
+    const cartCount = document.querySelector('[data-testid="cart-count"]');
+    cartCount.textContent = cart.length;
+    
+    // Show feedback
+    const btn = document.querySelector(`[data-testid="add-to-cart-${productId}"]`);
+    const originalText = btn.textContent;
+    btn.textContent = '✓ Added';
+    btn.disabled = true;
+    setTimeout(() => {
+        btn.textContent = originalText;
+        btn.disabled = false;
+    }, 1500);
+}
+
+// Event listeners
+document.querySelector('[data-testid="category-filter"]').addEventListener('change', function(e) {
+    currentCategory = e.target.value;
+    loadProducts();
+});
+
+let searchTimeout;
+document.querySelector('[data-testid="search-input"]').addEventListener('input', function(e) {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+        currentSearch = e.target.value;
+        loadProducts();
+    }, 300);
+});
+
+document.querySelector('[data-testid="clear-filters-button"]').addEventListener('click', function() {
+    currentCategory = 'all';
+    currentSearch = '';
+    document.querySelector('[data-testid="category-filter"]').value = 'all';
+    document.querySelector('[data-testid="search-input"]').value = '';
+    loadProducts();
+});
+
+// Load products on page load
+loadProducts();
+
+// Update cart count on page load
+const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+document.querySelector('[data-testid="cart-count"]').textContent = cart.length;
+</script>
+{% endblock %}

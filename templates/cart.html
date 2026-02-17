@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Shopping Cart - Playwright Demo Store{% endblock %}
+
+{% block content %}
+<section class="cart-container" data-testid="cart-container">
+    <h1 role="heading" aria-level="1">Shopping Cart</h1>
+    
+    <div class="cart-items" data-testid="cart-items">
+        <!-- Cart items will be loaded here -->
+    </div>
+    
+    <div class="cart-empty" data-testid="cart-empty" style="display: none;">
+        <p>Your cart is empty</p>
+        <a href="/products" class="btn-primary">Continue Shopping</a>
+    </div>
+    
+    <div class="cart-summary" data-testid="cart-summary" style="display: none;">
+        <h3>Order Summary</h3>
+        <p>Total Items: <span data-testid="cart-total-items">0</span></p>
+        <a href="/checkout" class="btn-primary btn-large" data-testid="proceed-to-checkout">
+            Proceed to Checkout
+        </a>
+    </div>
+</section>
+
+<script>
+const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+if (cart.length === 0) {
+    document.querySelector('[data-testid="cart-empty"]').style.display = 'block';
+} else {
+    document.querySelector('[data-testid="cart-items"]').style.display = 'block';
+    document.querySelector('[data-testid="cart-summary"]').style.display = 'block';
+    document.querySelector('[data-testid="cart-total-items"]').textContent = cart.length;
+}
+</script>
+{% endblock %}
