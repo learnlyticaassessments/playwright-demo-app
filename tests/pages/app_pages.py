@@ -3,6 +3,7 @@ Page Object Model - Business API Layer
 Pages expose business actions, hiding implementation details
 """
 from playwright.sync_api import Page, expect
+from tests.components.common_components import NavigationComponent
 from tests.locators.app_locators import (
     LoginLocators, RegisterLocators, HomeLocators, 
     ProductsLocators, CheckoutLocators, DashboardLocators
@@ -27,7 +28,7 @@ class HomePage(BasePage):
     
     def __init__(self, page: Page):
         super().__init__(page)
-        self.base_url = "http://localhost:5000"
+        self.base_url = "http://127.0.0.1:5000"
         
     def navigate(self):
         """Go to home page"""
@@ -60,7 +61,7 @@ class LoginPage(BasePage):
     
     def __init__(self, page: Page):
         super().__init__(page)
-        self.base_url = "http://localhost:5000/login"
+        self.base_url = "http://127.0.0.1:5000/login"
         
     def navigate(self):
         """Go to login page"""
@@ -94,7 +95,7 @@ class RegisterPage(BasePage):
     
     def __init__(self, page: Page):
         super().__init__(page)
-        self.base_url = "http://localhost:5000/register"
+        self.base_url = "http://127.0.0.1:5000/register"
         
     def navigate(self):
         """Go to register page"""
@@ -128,7 +129,8 @@ class ProductsPage(BasePage):
     
     def __init__(self, page: Page):
         super().__init__(page)
-        self.base_url = "http://localhost:5000/products"
+        self.base_url = "http://127.0.0.1:5000/products"
+        #self.navigation = NavigationComponent(page)
         
     def navigate(self):
         """Go to products page"""
@@ -169,7 +171,7 @@ class CheckoutPage(BasePage):
     
     def __init__(self, page: Page):
         super().__init__(page)
-        self.base_url = "http://localhost:5000/checkout"
+        self.base_url = "http://127.0.0.1:5000/checkout"
         
     def navigate(self):
         """Go to checkout page"""
@@ -204,7 +206,7 @@ class DashboardPage(BasePage):
     
     def __init__(self, page: Page):
         super().__init__(page)
-        self.base_url = "http://localhost:5000/dashboard"
+        self.base_url = "http://127.0.0.1:5000/dashboard"
         
     def navigate(self):
         """Go to dashboard page"""

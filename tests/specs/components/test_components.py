@@ -12,7 +12,7 @@ def test_modal_open_and_close(page):
     Shows: Visibility toggling
     """
     # GIVEN: User is on components page
-    page.goto("http://localhost:5000/components")
+    page.goto("http://127.0.0.1:5000/components")
     
     # Modal should not be visible initially
     modal = page.get_by_test_id("demo-modal")
@@ -35,7 +35,7 @@ def test_modal_confirm_action(page):
     Demonstrates: Modal action buttons
     """
     # GIVEN: Modal is open
-    page.goto("http://localhost:5000/components")
+    page.goto("http://127.0.0.1:5000/components")
     page.get_by_test_id("open-modal-button").click()
     
     # WHEN: User clicks confirm (will trigger alert in real app)
@@ -50,7 +50,7 @@ def test_dropdown_menu_interaction(page):
     Shows: Menu toggle and option selection
     """
     # GIVEN: User is on components page
-    page.goto("http://localhost:5000/components")
+    page.goto("http://127.0.0.1:5000/components")
     
     # Dropdown menu initially hidden
     dropdown_menu = page.get_by_test_id("dropdown-menu")
@@ -74,7 +74,7 @@ def test_tabs_navigation(page):
     Shows: Role-based tab locators
     """
     # GIVEN: User is on components page
-    page.goto("http://localhost:5000/components")
+    page.goto("http://127.0.0.1:5000/components")
     
     # Profile tab is active by default
     expect(page.get_by_test_id("tab-panel-profile")).to_be_visible()
@@ -99,7 +99,7 @@ def test_tabs_with_role_locators(page):
     Shows: Accessibility-first approach
     """
     # GIVEN: User is on components page
-    page.goto("http://localhost:5000/components")
+    page.goto("http://127.0.0.1:5000/components")
     
     # WHEN: Using role locators for tabs
     settings_tab = page.get_by_role("tab", name="Settings")
@@ -115,7 +115,7 @@ def test_alert_notifications(page):
     Shows: Temporary elements
     """
     # GIVEN: User is on components page
-    page.goto("http://localhost:5000/components")
+    page.goto("http://127.0.0.1:5000/components")
     
     # WHEN: User triggers success alert
     page.get_by_test_id("show-success-alert").click()
@@ -135,7 +135,7 @@ def test_accordion_expand_collapse(page):
     Shows: Expand/collapse pattern
     """
     # GIVEN: User is on components page
-    page.goto("http://localhost:5000/components")
+    page.goto("http://127.0.0.1:5000/components")
     
     # Content is hidden initially
     expect(page.get_by_test_id("accordion-content-1")).to_be_hidden()
@@ -158,7 +158,7 @@ def test_data_table_structure(page):
     Shows: Table cell access
     """
     # GIVEN: User is on components page
-    page.goto("http://localhost:5000/components")
+    page.goto("http://127.0.0.1:5000/components")
     
     # WHEN: Examining table structure
     table = page.get_by_test_id("data-table")
@@ -180,7 +180,7 @@ def test_data_table_row_actions(page):
     Shows: Nested locators
     """
     # GIVEN: User is on components page
-    page.goto("http://localhost:5000/components")
+    page.goto("http://127.0.0.1:5000/components")
     
     # WHEN: Clicking edit button in first row
     edit_button = page.get_by_test_id("edit-row-1")
@@ -196,7 +196,7 @@ def test_progress_bar(page):
     Shows: Dynamic value updates
     """
     # GIVEN: User is on components page
-    page.goto("http://localhost:5000/components")
+    page.goto("http://127.0.0.1:5000/components")
     
     # Progress bar starts at 0
     progress_bar = page.get_by_test_id("progress-bar")
@@ -218,7 +218,7 @@ def test_toast_notification(page):
     Shows: Animated elements
     """
     # GIVEN: User is on components page
-    page.goto("http://localhost:5000/components")
+    page.goto("http://127.0.0.1:5000/components")
     
     # WHEN: User triggers toast
     page.get_by_test_id("show-toast").click()
@@ -234,7 +234,7 @@ def test_table_filtering_by_status(page):
     Shows: Filter with has_text
     """
     # GIVEN: User is on components page
-    page.goto("http://localhost:5000/components")
+    page.goto("http://127.0.0.1:5000/components")
     
     # WHEN: Finding all active users
     active_rows = (page
@@ -252,7 +252,7 @@ def test_dropdown_with_role_menu(page):
     Shows: menuitem role for options
     """
     # GIVEN: User is on components page
-    page.goto("http://localhost:5000/components")
+    page.goto("http://127.0.0.1:5000/components")
     
     # WHEN: Opening dropdown
     page.get_by_test_id("dropdown-toggle-button").click()

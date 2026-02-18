@@ -19,7 +19,7 @@ def test_successful_login_with_test_ids(login_page: LoginPage, page):
     
     # THEN: User is redirected to dashboard
     page.wait_for_url("**/dashboard")
-    expect(page).to_have_url("http://localhost:5000/dashboard")
+    expect(page).to_have_url("http://127.0.0.1:5000/dashboard")
     
 def test_login_with_invalid_credentials(login_page: LoginPage):
     """
@@ -43,7 +43,7 @@ def test_login_with_role_based_locators(page):
     Accessibility: Ensures form elements have proper ARIA roles
     """
     # GIVEN: User navigates to login page
-    page.goto("http://localhost:5000/login")
+    page.goto("http://127.0.0.1:5000/login")
     
     # WHEN: Using role-based locators to interact with form
     # Note: These work because our HTML has proper semantic structure
@@ -108,7 +108,7 @@ def test_login_remember_me_checkbox(page):
     Shows: State verification for checkboxes
     """
     # GIVEN: User is on login page
-    page.goto("http://localhost:5000/login")
+    page.goto("http://127.0.0.1:5000/login")
     
     # WHEN: User checks remember me
     checkbox = page.get_by_test_id("remember-checkbox")
@@ -138,10 +138,10 @@ def test_navigation_links_on_login_page(page):
     Shows: Navigation between pages
     """
     # GIVEN: User is on login page
-    page.goto("http://localhost:5000/login")
+    page.goto("http://127.0.0.1:5000/login")
     
     # WHEN: User clicks register link
     page.get_by_test_id("register-link").click()
     
     # THEN: User is on register page
-    expect(page).to_have_url("http://localhost:5000/register")
+    expect(page).to_have_url("http://127.0.0.1:5000/register")

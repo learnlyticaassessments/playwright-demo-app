@@ -12,7 +12,7 @@ def test_text_inputs_with_labels(page):
     Best Practice: Using labels for form inputs
     """
     # GIVEN: User is on forms demo page
-    page.goto("http://localhost:5000/forms")
+    page.goto("http://127.0.0.1:5000/forms")
     
     # WHEN: Filling text inputs using labels
     page.get_by_label("First Name").fill("John")
@@ -30,7 +30,7 @@ def test_select_dropdown(page):
     Shows: Dropdown interaction
     """
     # GIVEN: User is on forms page
-    page.goto("http://localhost:5000/forms")
+    page.goto("http://127.0.0.1:5000/forms")
     
     # WHEN: Selecting country from dropdown
     page.get_by_test_id("country-select").select_option("us")
@@ -44,7 +44,7 @@ def test_radio_buttons_with_roles(page):
     Shows: Single selection from group
     """
     # GIVEN: User is on forms page
-    page.goto("http://localhost:5000/forms")
+    page.goto("http://127.0.0.1:5000/forms")
     
     # WHEN: Selecting size using role locators
     page.get_by_role("radio", name="Medium size").check()
@@ -62,7 +62,7 @@ def test_checkboxes_multiple_selection(page):
     Shows: Multiple selection capability
     """
     # GIVEN: User is on forms page
-    page.goto("http://localhost:5000/forms")
+    page.goto("http://127.0.0.1:5000/forms")
     
     # WHEN: Checking multiple checkboxes
     page.get_by_role("checkbox", name="Subscribe to newsletter").check()
@@ -81,7 +81,7 @@ def test_date_input(page):
     Shows: Date field interaction
     """
     # GIVEN: User is on forms page
-    page.goto("http://localhost:5000/forms")
+    page.goto("http://127.0.0.1:5000/forms")
     
     # WHEN: Filling date field
     page.get_by_test_id("birth-date-input").fill("2000-01-15")
@@ -95,7 +95,7 @@ def test_textarea(page):
     Shows: Multi-line text input
     """
     # GIVEN: User is on forms page
-    page.goto("http://localhost:5000/forms")
+    page.goto("http://127.0.0.1:5000/forms")
     
     # WHEN: Filling textarea
     comment_text = "This is a test comment with multiple lines.\nSecond line here."
@@ -110,7 +110,7 @@ def test_form_validation_required_field(page):
     Shows: Required field validation
     """
     # GIVEN: User is on forms page
-    page.goto("http://localhost:5000/forms")
+    page.goto("http://127.0.0.1:5000/forms")
     
     # WHEN: Filling form with valid data
     page.get_by_test_id("required-field-input").fill("Test Value")
@@ -130,7 +130,7 @@ def test_multi_step_form_navigation(page):
     Shows: Step indicators and navigation
     """
     # GIVEN: User is on forms page
-    page.goto("http://localhost:5000/forms")
+    page.goto("http://127.0.0.1:5000/forms")
     
     # WHEN: Starting multi-step form
     # Step 1
@@ -162,7 +162,7 @@ def test_multi_step_form_backward_navigation(page):
     Shows: State preservation
     """
     # GIVEN: User is on step 2
-    page.goto("http://localhost:5000/forms")
+    page.goto("http://127.0.0.1:5000/forms")
     page.get_by_test_id("step1-name-input").fill("Jane Doe")
     page.get_by_test_id("next-step-1").click()
     
@@ -181,7 +181,7 @@ def test_placeholder_locators(page):
     Shows: Alternative to labels when appropriate
     """
     # GIVEN: User is on forms page
-    page.goto("http://localhost:5000/forms")
+    page.goto("http://127.0.0.1:5000/forms")
     
     # WHEN: Using placeholder to find input
     email_input = page.get_by_placeholder("user@example.com")
@@ -196,7 +196,7 @@ def test_aria_described_by_for_help_text(page):
     Shows: Help text association
     """
     # GIVEN: User is on forms page
-    page.goto("http://localhost:5000/forms")
+    page.goto("http://127.0.0.1:5000/forms")
     
     # WHEN: Checking email input
     email_input = page.get_by_label("Email Address")
@@ -210,7 +210,7 @@ def test_file_upload_input(page):
     Shows: File input interaction
     """
     # GIVEN: User is on forms page
-    page.goto("http://localhost:5000/forms")
+    page.goto("http://127.0.0.1:5000/forms")
     
     # WHEN: Setting file on input
     file_input = page.get_by_test_id("file-upload-input")

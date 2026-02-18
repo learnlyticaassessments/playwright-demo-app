@@ -139,7 +139,7 @@ def test_product_card_displays_correct_info(page):
     Shows: Data verification in complex components
     """
     # GIVEN: User is on products page
-    page.goto("http://localhost:5000/products")
+    page.goto("http://127.0.0.1:5000/products")
     page.get_by_test_id("loading-indicator").wait_for(state="hidden")
     
     # WHEN: Examining first product
@@ -157,7 +157,7 @@ def test_products_grid_uses_role_list(page):
     Shows: Accessibility-first approach
     """
     # GIVEN: User is on products page
-    page.goto("http://localhost:5000/products")
+    page.goto("http://127.0.0.1:5000/products")
     page.get_by_test_id("loading-indicator").wait_for(state="hidden")
     
     # WHEN: Checking products grid structure
